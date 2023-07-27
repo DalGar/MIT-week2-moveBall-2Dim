@@ -1,0 +1,68 @@
+<div id="ball" style="
+  z-index:5;
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:green"></div>
+
+<script>
+var positionX = 0;
+var positionY = 0;
+var velocityX = 50;
+var velocityY = 20;
+var reverseX = false;
+var reverseY = false;
+var ball = document.getElementById('ball');
+
+
+// Function to create a random RGB color 
+function randomRgbColor() {
+  let r = Math.floor(Math.random() * 256); 
+  let g = Math.floor(Math.random() * 256);
+  let b = Math.floor(Math.random() * 256); 
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
+};
+
+// YOUR CODE 
+function moveBall() {
+  var Xmin = 0;
+  var Xmax = window.innerWidth - 50; //returns the interior width of the window
+  var Ymin = 0;
+  var Ymax = window.innerHeight - 50; //returns the interior height of the window
+
+  // x-axis and y-axis have independent motions, at a certain point in time x could be reversed and y could not
+  if (reverseX) {
+    positionX = positionX - velocityX;
+    ball.style.left = positionX + "px";
+  } else {
+    positionX = positionX + velocityX;
+    ball.style.left = positionX + "px";
+  }
+
+  if (reverseY) {
+    positionY = positionY - velocityY;
+    ball.style.top = positionY + "px";
+  } else {
+    positionY = positionY + velocityY;
+    ball.style.top = positionY + "px";
+  }
+
+  // When the ball hits the edges
+  if (positionX > Xmax || positionX === Xmin) {
+    reverseX = !reverseX;
+    ball.style.background = randomRgbColor();
+  }
+  
+  if (positionY > Ymax || positionY === Ymin) {
+    reverseY = !reverseY;
+    ball.style.background = randomRgbColor();
+  }
+
+}
+
+setInterval(moveBall, 48);
+// ----------------
+</script>
